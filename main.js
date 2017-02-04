@@ -163,9 +163,24 @@ var mod;
     total++;
     
 //start
-    if(facetime%120==0){
+    if(faketime%120==0){
       random= game.rnd.integerInRange(1, 3);
         if(random==1){
+      //audioR
+     }
+     else if (random==2){
+        //M
+
+     }
+     else if (random==3){
+        //L
+     }  
+          }
+
+     
+//half
+  if(faketime%120==30){
+    if(random==1){
       //audioR
      }
      else if (random==2){
@@ -176,11 +191,6 @@ var mod;
         //L
      }  
           }
-
-     
-//half
-  if(facetime%120==30){
-
   }
 
 
