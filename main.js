@@ -191,7 +191,7 @@ var mod;
         //L
      }  
           }
-  }
+  
 
 
 // hit
@@ -310,5 +310,6 @@ game.debug.text("Head : " + headCheck, 32, 96,{ font: "128px", fill: "#ffffff", 
 
 
   
+}
 }
 }
