@@ -22,7 +22,7 @@ var counter = 0 ;
 var faketime=0; 
 
 var headCheck;
-var text01=00;
+
 var timer=0;
 var total=0;
 
@@ -44,7 +44,32 @@ var au;
 var beep;
 var peep;
 
+//var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+//var myAudio = document.querySelector('audio');
+//var pre = document.querySelector('pre');
+//var myScript = document.querySelector('script');
 
+//var panControl = document.querySelector('.panning-control');
+//var panValue = document.querySelector('.panning-value');
+
+//pre.innerHTML = myScript.innerHTML;
+    // Create a MediaElementAudioSourceNode
+    // Feed the HTMLMediaElement into it
+//var source = audioCtx.createMediaElementSource(myAudio);
+
+    // Create a stereo panner
+//var panNode = audioCtx.createStereoPanner();
+
+
+
+
+//var ctx = new AudioContext();
+//var stereoPannerNode = ctx.createStereoPanner(); // create a StereoPannerNode
+
+
+var audioCtx = new AudioContext();
+var panNode = audioCtx.createStereoPanner();
+panNode.pan.value = -0.5;
 
 // function to scale up the game to full screen
 	function goFullScreen(){
@@ -72,7 +97,7 @@ function create(){
    peep = game.add.audio('peep');
     beep = game.add.audio('beep');
 
-    //beep.play();
+    beep.play();
     hit(3);
 
 	   game.stage.backgroundColor = '#6688ee';
@@ -112,7 +137,7 @@ function create(){
   
 
 	}
-	function update(){
+function update(){
 		
 faketime++;
 var mod;
@@ -190,7 +215,7 @@ var mod;
      else if (random==3){
         //L
      }  
-          }
+  }
   
 
 
@@ -203,15 +228,23 @@ var mod;
       updateText();
 
 
+   
 }
-	// function to be called when the game has been created
+	
 
 function updateText() {
+
+
+
+    beep.play();
+
+
+
 
    // headCheck++;
 var move=0;
 
-text01.setText('Counter: ' + counter);
+
 
 
     
@@ -250,8 +283,11 @@ if(45<yy && yy<135&&-45<zz&&zz<45){
 
 
 }
-function hit(pos){
-beep.play();
+function hit(pos) {
+   // panNode.pan.value = -1;
+    beep.play();
+
+
 }
 
 	
@@ -311,5 +347,5 @@ game.debug.text("Head : " + headCheck, 32, 96,{ font: "128px", fill: "#ffffff", 
 
   
 }
-}
+
 }
