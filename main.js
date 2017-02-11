@@ -1,6 +1,6 @@
 ﻿window.onload = function () {
 
-    var game = new Phaser.Game(600, 500, Phaser.CANVAS, '', {
+    var game = new Phaser.Game(800, 500, Phaser.CANVAS, '', {
         preload: preload,
         create: create,
         update: update,
@@ -168,6 +168,7 @@
         //start
         if (faketime == 1) {
             game.paused = true;
+            text11.text = "PLAY";
             
         }
 
@@ -230,7 +231,7 @@ game.input.onDown.add(unpause, self);
 
             f++;
 
-            random = game.rnd.integerInRange(2, 2);
+            random = game.rnd.integerInRange(1, 3);
             if (random == 1) {
                 //audioR
                 phitr.play();
