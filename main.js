@@ -1,351 +1,374 @@
-window.onload = function() {
+﻿window.onload = function () {
 
-var game = new Phaser.Game(768,1280,Phaser.CANVAS,'',{
-		preload : preload,
-		create : create,
-		update : update,
-		create:create,
-		 render:render  
-	});
+    var game = new Phaser.Game(600, 500, Phaser.CANVAS, '', {
+        preload: preload,
+        create: create,
+        update: update,
+        create: create,
+        render: render
+    });
 
-	var paddle1;
-	var paddle2;
-	var player;
-
-	
-	
-
-	var sprite ;
-	var sky;
-var counter = 0 ;
-
-var faketime=0; 
-
-var headCheck;
-
-var timer=0;
-var total=0;
+    //1
+    var paddle1;
+    var paddle2;
+    var player;
 
 
-var random=0;
-var play=5;
-var score=0;
-var miss=0;
+    var sprite;
+    var sky;
+    var counter = 0;
 
-var countdown;
+    var faketime = 0;
 
-var xx;
-var yy;
-var zz;
+    var headCheck;
 
-
-//audio
-var au;
-var beep;
-var peep;
-
-//var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-//var myAudio = document.querySelector('audio');
-//var pre = document.querySelector('pre');
-//var myScript = document.querySelector('script');
-
-//var panControl = document.querySelector('.panning-control');
-//var panValue = document.querySelector('.panning-value');
-
-//pre.innerHTML = myScript.innerHTML;
-    // Create a MediaElementAudioSourceNode
-    // Feed the HTMLMediaElement into it
-//var source = audioCtx.createMediaElementSource(myAudio);
-
-    // Create a stereo panner
-//var panNode = audioCtx.createStereoPanner();
+    var timer = 0;
+    var total = 0;
 
 
+    var random = 0;
+    var play = 5;
+    var score = 0;
+    var miss = 0;
+
+    var countdown;
+
+    var xx;
+    var yy;
+    var zz;
 
 
-//var ctx = new AudioContext();
-//var stereoPannerNode = ctx.createStereoPanner(); // create a StereoPannerNode
+    //audio
+    var au;
+    var beep;
+    var peep;
+
+    var phitl, phitr, ptal, ptar, hitl, hitr, tal, tar;
 
 
-var audioCtx = new AudioContext();
-var panNode = audioCtx.createStereoPanner();
-panNode.pan.value = -0.5;
+    var timeloop;
+    var hit = 0;
+    var f = 0;
+    var ff = 0;
+    var fff = 0;
 
-// function to scale up the game to full screen
-	function goFullScreen(){
-		game.scale.pageAlignHorizontally = true;
-		game.scale.pageAlignVertically = true;
-		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-		game.scale.setScreenSize(true);
-	}
-
-	function preload(){
-		game.load.image('paddle','assets/paddle.png');
-		game.load.image("player","assets/player.png");	
-      game.load.image("sky","assets/sky.png");	
-      text01=game.add.text(0,0,"0000");
+    var start = 120;
 
 
+    var text11;
 
-      game.load.audio('peep', 'assets/audio/ping_pong_8bit_peeeeeep.mp3');
-    game.load.audio('beep', 'assets/audio/ping_pong_8bit_beeep.mp3');
+    //game.time.advancedTiming = true;
 
-
-	}
-function create(){
-		
-   peep = game.add.audio('peep');
-    beep = game.add.audio('beep');
-
-    beep.play();
-    hit(3);
-
-	   game.stage.backgroundColor = '#6688ee';
+    var bpmText;
 
 
-
-		player = game.add.sprite(0, 0, 'player');
-    player.alpha = 0.5 ;
-    player.x = game.width / 2 ;
-    player.anchor.x = player.anchor.y = 0.5 ;
-
-
-
-
-    	sky = game.add.sprite(0, 0, 'sky');
-    	sky.alpha = 0.5 ;
-    sky.x = game.width / 2 ;
-    sky.anchor.x = sky.anchor.y = 0.5 ;
-
-
-
-
-
-	   //text 
-  	headCheck=0;
-  	
-
-      //  Create our Timer
-    //timer = game.time.create(false);
-
-    //  Set a TimerEvent to occur after 2 seconds
-    //timer.loop(2000, updateCounter);
-
-    //  Start the timer running - this is important!
-    //  It won't start automatically, allowing you to hook it to button events and the like.
-    
-  
-
-	}
-function update(){
-		
-faketime++;
-var mod;
-
-//timer.start();
-
-	if (window.DeviceOrientationEvent) {
-		
-		window.addEventListener("deviceorientation", function(event) 
-		{
-			
-			var xValue = Math.round(event.gamma);
-			var yValue = Math.round(event.beta);
-			var Rotation = Math.round(event.alpha);
-
-
-				xx=xValue;
-				yy=yValue;
-				//zz=Rotation;
-        zz=xValue;
-
-		}, true);
-		
-		
-		
-	} else {
-	alert("Sorry, your browser doesn't support Device Orientation");
-	}
-
-	//touch
-	game.input.onDown.addOnce(updateText, this);
-
-	
-	
-
-
-
-    if(play==random){
-      score++;
-      //sound
-      
-    }
-    if(play!=random){
-      score=0;
-      //soundbad
-    }
-
-    total++;
-    
-//start
-    if(faketime%120==0){
-      random= game.rnd.integerInRange(1, 3);
-        if(random==1){
-      //audioR
-     }
-     else if (random==2){
-        //M
-
-     }
-     else if (random==3){
-        //L
-     }  
-          }
-
-     
-//half
-  if(faketime%120==30){
-    if(random==1){
-      //audioR
-     }
-     else if (random==2){
-        //M
+    function preload() {
+       
         
-     }
-     else if (random==3){
-        //L
-     }  
-  }
-  
-
-
-// hit
+        text01 = game.add.text(0, 0, "0");
 
 
 
-    play=5;
+        game.load.audio('peep', 'assets/audio/ping_pong_8bit_peeeeeep.mp3');
+        game.load.audio('beep', 'assets/audio/ping_pong_8bit_beeep.mp3');
 
-      updateText();
-
-
-   
-}
-	
-
-function updateText() {
-
-
-
-    beep.play();
+        game.load.audio('phitl', 'assets/audio/phitl.mp3');
+        game.load.audio('phitr', 'assets/audio/phitr.mp3');
+        game.load.audio('hitl', 'assets/audio/phitl.mp3');
+        game.load.audio('hitr', 'assets/audio/phitr.mp3');
+        game.load.audio('ptal', 'assets/audio/ptal.mp3');
+        game.load.audio('ptar', 'assets/audio/ptar.mp3');
+        game.load.audio('tal', 'assets/audio/tal.mp3');
+        game.load.audio('tar', 'assets/audio/tar.mp3');
 
 
-
-
-   // headCheck++;
-var move=0;
-
-
-
-
-    
-    
-headCheck="kak";
-play=2;
-
-console.log("sss "+yy+"ss "+zz+timer);
-
-
-if(45<yy && yy<135&&-45<zz&&zz<45){
-        	//document.write("up\n");.
-        	console.log("up "+yy+zz);
-          headCheck="up";
-          play=1;
-          
-          beep.play();
-
-        }
-       else if(45<zz&&zz<81){
-        	
-        	console.log("non "+yy+zz);
-           headCheck="non";
-           play=2;
-           beep.play();
-           
-        }
-       else if(-135<yy&& yy<-45&&-45<zz&&zz<45){
-        	console.log("down\n");
-        	headCheck="down";
-          play=3;
-          //beep.play();
-          
-          hit(3);
-        }
-
-
-}
-function hit(pos) {
-   // panNode.pan.value = -1;
-    beep.play();
-
-
-}
-
-	
-
-function updateCounter() {
-
-    if(play==random){
-      score++;
-      //sound
       
+
+
     }
-    if(play!=random){
-      score=0;
-      //soundbad
+    function create() {
+
+        peep = game.add.audio('peep');
+        beep = game.add.audio('beep');
+
+        phitl = game.add.audio('phitl')
+        phitr = game.add.audio('phitr')
+        hitl = game.add.audio('hitl')
+        hitr = game.add.audio('hitlr')
+        ptal = game.add.audio('ptal')
+        ptar = game.add.audio('ptar')
+        tal = game.add.audio('tal')
+        tar = game.add.audio('tar')
+
+        tar.play();
+        // hit(3);
+
+        game.stage.backgroundColor = '#0a1140';
+
+
+
+        player = game.add.sprite(0, 0, 'player');
+        player.alpha = 0.5;
+        player.x = game.width / 2;
+        player.anchor.x = player.anchor.y = 0.5;
+
+
+
+
+        //text 
+        headCheck = 0;
+
+
+
+
+      
+        /*text.anchor.x = 0.5;
+        text.anchor.y = 0.5;*/
+
+       
+
+        text01.inputEnabled = true;
+
+        text01.input.enableDrag();
+
+         text11 = game.add.text(game.world.centerX, game.world.centerY, "click and drag me", { font: "300px Arial", fill: "#ff0044", align: "center" });
+
+        text11.anchor.set(0.5);
+
+        text11.inputEnabled = true;
+
+        text11.input.enableDrag();
+        text11.resolution = 1;
+
+        //timer.loop(2000, updateCounter);
+       /* bmpText = game.add.bitmapText(10, 100, 'carrier_command', 'Drag me around !', 34);
+
+        bmpText.inputEnabled = true;
+
+        bmpText.input.enableDrag();*/
+        
+
+    }
+    function unpause(event) {
+        // Only act if paused
+        if (game.paused) {
+            miss = 0;
+            faketime = 2;
+                game.paused = false;
+            }
+        
+    };
+    function update() {
+
+        
+
+
+        text11.text = score;
+
+        //start
+        if (faketime == 1) {
+            game.paused = true;
+            
+        }
+
+
+        //lose 
+
+        if (miss == 3) {
+            game.paused = true;
+
+        }
+        
+game.input.onDown.add(unpause, self);
+
+        
+
+
+
+
+        faketime++;
+
+        //   timeloop.integer();
+        var mod;
+        //2
+        play = 2;
+
+        //timer.start();
+
+        if (window.DeviceOrientationEvent) {
+
+            window.addEventListener("deviceorientation", function (event) {
+
+                var xValue = Math.round(event.gamma);
+                var yValue = Math.round(event.beta);
+                var Rotation = Math.round(event.alpha);
+
+
+                xx = xValue;
+                yy = yValue;
+                //zz=Rotation;
+                zz = xValue;
+
+            }, true);
+
+
+
+        } else {
+            alert("Sorry, your browser doesn't support Device Orientation");
+        }
+
+        //touch
+        //game.input.onDown.addOnce(updateText, this);
+
+
+        // timeloop=faketime%120;
+        timeloop = faketime % start;
+
+
+        //start
+        if (timeloop == 0) {
+
+            f++;
+
+            random = game.rnd.integerInRange(2, 2);
+            if (random == 1) {
+                //audioR
+                phitr.play();
+            }
+            else if (random == 2) {
+                //M
+                phitl.play();
+                phitr.play();
+            }
+            else if (random == 3) {
+                //L
+                phitl.play();
+            }
+        }
+
+
+        //half
+        if (timeloop == (start / 4)) {
+            if (random == 1) {
+                //audioR
+                ptar.play();
+            }
+            else if (random == 2) {
+                //M
+                ptar.play();
+                tal.play();
+            }
+            else if (random == 3) {
+                //L
+                ptal.play();
+            }
+        }
+
+
+
+        // hit
+
+        if ((start * 2 / 5) < timeloop && timeloop < (start * 3 / 4)) {
+
+
+            //gyro 
+            if (45 < yy && yy < 135 && -45 < zz && zz < 45) {
+                headCheck = "up";
+                play = 1;
+            }
+            else if (45 < zz && zz < 81) {
+                headCheck = "non";
+                play = 2;
+            }
+            else if (-135 < yy && yy < -45 && -45 < zz && zz < 45) {
+
+                headCheck = "down";
+                play = 3;
+
+            }
+
+            if (play == random && f == ff + 1) {
+                hit = 1;
+                play = 5;
+                //score++;
+                if (random == 1) {
+                    phitr.play();
+
+                }
+                else if (random == 2) {
+                    phitl.play();
+                    phitr.play();
+                }
+                else if (random == 3) {
+                    phitl.play();
+                }
+                score++;
+                //faster
+                //  start = start - (score*0.5);
+
+                game.time.Fps++;
+                this.slowMotion = 2.0;
+                ff++;
+
+
+            }
+            if (play != random && f == ff + 1) { beep.play(); miss++; ff++; }
+
+
+        }
+
+
+
+        if ((start * 3 / 4) < timeloop && f == fff + 1) {
+            if (play == random) {
+
+                if (random == 1) {
+                    ptar.play();
+
+                }
+                else if (random == 2) {
+                    ptal.play();
+                    ptar.play();
+                }
+                else if (random == 3) {
+                    ptal.play();
+                }
+
+
+            }
+
+            fff++;
+
+
+        }
+
+
+
     }
 
-    total++;
-    random= game.rnd.integerInRange(1, 3);
-
-
-     if(random==1){
-      //R
-     }
-     else if (random==2){
-        //M
-     }
-     else if (random==3){
-        //L
-     }
 
 
 
+    function render() {
 
-    play=5;
-
-
-}
-
-	function render() {
-
-     game.debug.text('Time until event: ' + timer.duration, 32, 10);
-    game.debug.text('Loop Count: ' + total, 32, 64);
+        game.debug.text('Fps: ' + game.time.desiredFps, 32, 10);
+        game.debug.text('Loop Count: ' + timeloop, 32, 64);
 
 
-game.debug.text("Head : " + headCheck, 32, 96,{ font: "128px", fill: "#ffffff", align: "center" });
+        game.debug.text("Head : " + headCheck, 32, 96, { font: "128px", fill: "#ffffff", align: "center" });
 
 
-    game.debug.text("score: " + score, 32, 200);
-    game.debug.text("miss: " + miss, 150, 200);
-    game.debug.text("Time until event: " + faketime, 32, 300);
+        game.debug.text("score: " + score, 32, 200);
+        game.debug.text("miss: " + miss, 150, 200);
+        game.debug.text("Time until event: " + faketime, 32, 300);
 
-    game.debug.text("random: " + random, 32, 400);
-    game.debug.text("play: " + play, 32, 450);
-
-    
+        game.debug.text("random: " + random, 32, 400);
+        game.debug.text("play: " + play, 32, 450);
 
 
-  
-}
+
+
+
+    }
 
 }
