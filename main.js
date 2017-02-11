@@ -43,7 +43,7 @@
     var beep;
     var peep;
 
-    var phitl, phitr, ptal, ptar, hitl, hitr, tal, tar;
+    var phitl, phitr, ptal, ptar, hitl, hitr, tal, tar,countdown;
 
 
     var timeloop;
@@ -64,6 +64,8 @@
     var time=0;
     var div = 20;
     
+    var aa;
+
 
     function preload() {
        
@@ -84,7 +86,7 @@
         game.load.audio('tal', 'assets/audio/tal.mp3');
         game.load.audio('tar', 'assets/audio/tar.mp3');
 
-
+        game.load.audio('countdown', 'assets/audio/countdown.mp3');
       
 
 
@@ -94,16 +96,17 @@
         peep = game.add.audio('peep');
         beep = game.add.audio('beep');
 
-        phitl = game.add.audio('phitl')
-        phitr = game.add.audio('phitr')
-        hitl = game.add.audio('hitl')
-        hitr = game.add.audio('hitlr')
-        ptal = game.add.audio('ptal')
-        ptar = game.add.audio('ptar')
-        tal = game.add.audio('tal')
-        tar = game.add.audio('tar')
+        phitl = game.add.audio('phitl');
+        phitr = game.add.audio('phitr');
+        hitl = game.add.audio('hitl');
+        hitr = game.add.audio('hitlr');
+        ptal = game.add.audio('ptal');
+        ptar = game.add.audio('ptar');
+        tal = game.add.audio('tal');
+        tar = game.add.audio('tar');
+     //   countdown = game.add.audio('countdown');
 
-        tar.play();
+        
         // hit(3);
 
         game.stage.backgroundColor = '#0a1140';
@@ -135,14 +138,20 @@ game.input.onDown.add(unpause, self);
 game.paused = true;
 timeloop = 0;
 
+
+
+
     }
     function unpause(event) {
         // Only act if paused
         if (game.paused) {
             miss = 0;score = 0;
             faketime = 2;
-            game.paused = false;
-            
+         //   countdown.play();
+         
+            peep.play();
+                game.paused = false;
+          
             }
         
     };
@@ -210,7 +219,7 @@ faketime = time.toFixed(0);
 
             f++;
 
-            random = game.rnd.integerInRange(2, 2);
+            random = game.rnd.integerInRange(1, 3);
             if (random == 1) {
                 //audioR
                 phitr.play();
