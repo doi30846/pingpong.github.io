@@ -272,7 +272,7 @@ game.input.onDown.add(unpause, self);
 
 
             //gyro 
-            if (45 < yy && yy < 135 && -45 < zz && zz < 45) {
+            if (45 < yy && yy < 135 && -60 < zz && zz < 60) {
                 headCheck = "up";
                 play = 1;
             }
@@ -280,7 +280,7 @@ game.input.onDown.add(unpause, self);
                 headCheck = "non";
                 play = 2;
             }
-            else if (-135 < yy && yy < -45 && -45 < zz && zz < 45) {
+            else if (-135 < yy && yy < -45 && -60 < zz && zz < 60) {
 
                 headCheck = "down";
                 play = 3;
