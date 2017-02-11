@@ -61,6 +61,9 @@
 
     var bpmText;
 
+    var time=0;
+    var div = 20;
+    
 
     function preload() {
        
@@ -107,12 +110,6 @@
 
 
 
-        player = game.add.sprite(0, 0, 'player');
-        player.alpha = 0.5;
-        player.x = game.width / 2;
-        player.anchor.x = player.anchor.y = 0.5;
-
-
 
 
         //text 
@@ -120,18 +117,11 @@
 
 
 
-
-      
-        /*text.anchor.x = 0.5;
-        text.anchor.y = 0.5;*/
-
-       
-
         text01.inputEnabled = true;
 
         text01.input.enableDrag();
 
-         text11 = game.add.text(game.world.centerX, game.world.centerY, "click and drag me", { font: "300px Arial", fill: "#ff0044", align: "center" });
+         text11 = game.add.text(game.world.centerX, game.world.centerY, "PLAY!", { font: "300px Arial", fill: "#ff0044", align: "center" });
 
         text11.anchor.set(0.5);
 
@@ -140,38 +130,28 @@
         text11.input.enableDrag();
         text11.resolution = 1;
 
-        //timer.loop(2000, updateCounter);
-       /* bmpText = game.add.bitmapText(10, 100, 'carrier_command', 'Drag me around !', 34);
-
-        bmpText.inputEnabled = true;
-
-        bmpText.input.enableDrag();*/
-        
+        faketime = 0;
+game.input.onDown.add(unpause, self);
+game.paused = true;
+timeloop = 0;
 
     }
     function unpause(event) {
         // Only act if paused
         if (game.paused) {
-            miss = 0;
+            miss = 0;score = 0;
             faketime = 2;
-                game.paused = false;
+            game.paused = false;
+            
             }
         
     };
     function update() {
 
-        
-
 
         text11.text = score;
 
         //start
-        if (faketime == 1) {
-            game.paused = true;
-            text11.text = "PLAY";
-            
-        }
-
 
         //lose 
 
@@ -180,14 +160,13 @@
 
         }
         
-game.input.onDown.add(unpause, self);
 
         
+     //  time= game.time.totalElapsedSeconds();
+time = game.time.now/div;
 
-
-
-
-        faketime++;
+faketime = time.toFixed(0);
+       // faketime++;
 
         //   timeloop.integer();
         var mod;
@@ -231,7 +210,7 @@ game.input.onDown.add(unpause, self);
 
             f++;
 
-            random = game.rnd.integerInRange(1, 3);
+            random = game.rnd.integerInRange(2, 2);
             if (random == 1) {
                 //audioR
                 phitr.play();
@@ -269,7 +248,7 @@ game.input.onDown.add(unpause, self);
 
         // hit
 
-        if ((start * 2 / 5) < timeloop && timeloop < (start * 3 / 4)) {
+        if (45 < timeloop && timeloop < 90) {
 
 
             //gyro 
@@ -305,10 +284,10 @@ game.input.onDown.add(unpause, self);
                 }
                 score++;
                 //faster
+               
                 //  start = start - (score*0.5);
 
-                game.time.Fps++;
-                this.slowMotion = 2.0;
+              
                 ff++;
 
 
@@ -320,7 +299,7 @@ game.input.onDown.add(unpause, self);
 
 
 
-        if ((start * 3 / 4) < timeloop && f == fff + 1) {
+        if ((start * 3 / 4).toFixed(0) < timeloop && f == fff + 1) {
             if (play == random) {
 
                 if (random == 1) {
@@ -352,7 +331,7 @@ game.input.onDown.add(unpause, self);
 
     function render() {
 
-        game.debug.text('Fps: ' + game.time.desiredFps, 32, 10);
+        game.debug.text('Fps: ' + game.time.desiredFps + time, 32, 10);
         game.debug.text('Loop Count: ' + timeloop, 32, 64);
 
 
@@ -361,7 +340,7 @@ game.input.onDown.add(unpause, self);
 
         game.debug.text("score: " + score, 32, 200);
         game.debug.text("miss: " + miss, 150, 200);
-        game.debug.text("Time until event: " + faketime, 32, 300);
+        game.debug.text("Time  " + faketime, 32, 300);
 
         game.debug.text("random: " + random, 32, 400);
         game.debug.text("play: " + play, 32, 450);
