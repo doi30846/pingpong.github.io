@@ -66,6 +66,11 @@
     
     var aa;
 
+    var alp ;
+    var bet ;
+    var gam;
+
+    var texttry;
 
     function preload() {
        
@@ -138,8 +143,8 @@ game.input.onDown.add(unpause, self);
 game.paused = true;
 timeloop = 0;
 
-
-
+texttry = game.add.text(game.world.centerX, 420, "", { font: "130px Arial", fill: "#f56444", align: "center" });
+texttry.anchor.set(0.5);
 
     }
     function unpause(event) {
@@ -159,12 +164,14 @@ timeloop = 0;
 
 
         text11.text = score;
-
+        texttry.text = "";
         //start
 
         //lose 
 
         if (miss == 3) {
+            peep.play();
+            texttry.text = "Let Try !!!";
             game.paused = true;
 
         }
@@ -179,11 +186,10 @@ faketime = time.toFixed(0);
 
         //   timeloop.integer();
         var mod;
-        //2
-        play = 2;
+        
 
         //timer.start();
-
+/*
         if (window.DeviceOrientationEvent) {
 
             window.addEventListener("deviceorientation", function (event) {
@@ -204,7 +210,25 @@ faketime = time.toFixed(0);
 
         } else {
             alert("Sorry, your browser doesn't support Device Orientation");
-        }
+        }*/
+
+       // if (window.DeviceOrientationEvent) {
+
+            window.addEventListener("deviceorientation", function (event) {
+
+                gam = Math.round(event.gamma);
+                bet = Math.round(event.beta);
+                 alp = Math.round(event.alpha);
+
+
+               
+
+            }, true);
+            //}
+
+
+
+       
 
         //touch
         //game.input.onDown.addOnce(updateText, this);
@@ -218,8 +242,9 @@ faketime = time.toFixed(0);
         if (timeloop == 0) {
 
             f++;
-
-            random = game.rnd.integerInRange(1, 3);
+//2
+      //  play = 2;
+            random = game.rnd.integerInRange(2, 2);
             if (random == 1) {
                 //audioR
                 phitr.play();
@@ -252,29 +277,34 @@ faketime = time.toFixed(0);
                 ptal.play();
             }
         }
+        //////////////////////////////////////////////////////////////////////////////////////////
+        if (55 < bet && bet < 125 && -45 < gam && gam < 45) {
+            headCheck = "up";
+            play = 1;
 
+            /*   if (60 < gam && gam < 91) {
+                   headCheck = "non";
+                   play = 2;
+               }*/
+        }else {
+               headCheck = "++++++";
+               play = 2;
+           }
+           if (-135 < bet && bet < -60 && -60 < gam && gam < 60) {
 
+                headCheck = "down";
+                play = 3;
 
+           }
+           
+        /////////////////////////////////////////////////////////////////////////////////
         // hit
 
         if (45 < timeloop && timeloop < 90) {
 
 
             //gyro 
-            if (45 < yy && yy < 135 && -60 < zz && zz < 60) {
-                headCheck = "up";
-                play = 1;
-            }
-            else if (45 < zz && zz < 81) {
-                headCheck = "non";
-                play = 2;
-            }
-            else if (-135 < yy && yy < -45 && -60 < zz && zz < 60) {
-
-                headCheck = "down";
-                play = 3;
-
-            }
+            
 
             if (play == random && f == ff + 1) {
                 hit = 1;
