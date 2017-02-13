@@ -72,6 +72,13 @@
 
     var texttry;
 
+    var b1=0;
+    var b2 = 0;
+    var b3 = 0;
+    var b4 = 0;
+
+
+
     function preload() {
        
         
@@ -177,14 +184,6 @@ texttry.anchor.set(0.5);
         }
         
 
-        
-     //  time= game.time.totalElapsedSeconds();
-time = game.time.now/div;
-
-faketime = time.toFixed(0);
-       // faketime++;
-
-        //   timeloop.integer();
         var mod;
         
 
@@ -234,14 +233,26 @@ faketime = time.toFixed(0);
         //game.input.onDown.addOnce(updateText, this);
 
 
+
+        //  time= game.time.totalElapsedSeconds();
+            time = game.time.now / div;
+
+            faketime = time.toFixed(0);
+        // faketime++;
+
+        //   timeloop.integer();
         // timeloop=faketime%120;
-        timeloop = faketime % start;
+            timeloop = (faketime % start) / 10;
+            timeloop = timeloop.toFixed(0);
+
+        
 
 
-        //start
-        if (timeloop == 0) {
+        //start111111111111111111111111111111111111
+        if (timeloop == 0&&b1==0) {
 
-            f++;
+           
+         
 //2
       //  play = 2;
             random = game.rnd.integerInRange(2, 2);
@@ -258,12 +269,17 @@ faketime = time.toFixed(0);
                 //L
                 phitl.play();
             }
+            b1 = 1;
         }
 
 
-        //half
-        if (timeloop == (start / 4)) {
-            if (random == 1) {
+        //half222222222222222222222
+       // if (timeloop == (start / 4)) {
+       if (timeloop == 3 && b2==0) {
+           
+           
+
+           if (random == 1) {
                 //audioR
                 ptar.play();
             }
@@ -275,10 +291,10 @@ faketime = time.toFixed(0);
             else if (random == 3) {
                 //L
                 ptal.play();
-            }
+            }b2 = 1;
         }
         //////////////////////////////////////////////////////////////////////////////////////////
-        if (55 < bet && bet < 125 && -45 < gam && gam < 45) {
+             if (55 < bet && bet < 125 && -45 < gam && gam < 45) {
             headCheck = "up";
             play = 1;
 
@@ -298,17 +314,17 @@ faketime = time.toFixed(0);
            }
            
         /////////////////////////////////////////////////////////////////////////////////
-        // hit
+        // hit3333333
 
-        if (45 < timeloop && timeloop < 90) {
-
-
+      //  if (45 < timeloop && timeloop < 90) {
+     if (timeloop==6 && b3==0) {
+        
             //gyro 
             
 
-            if (play == random && f == ff + 1) {
+            if (play == random ) {
                 hit = 1;
-                play = 5;
+              //  play = 5;
                 //score++;
                 if (random == 1) {
                     phitr.play();
@@ -323,22 +339,22 @@ faketime = time.toFixed(0);
                 }
                 score++;
                 //faster
-               
+               b3 = 1;
                 //  start = start - (score*0.5);
 
               
-                ff++;
-
 
             }
-            if (play != random && f == ff + 1) { beep.play(); miss++; ff++; }
+            if (play != random) { beep.play(); miss++; b3 = 1; }
 
 
         }
 
 
-
-        if ((start * 3 / 4).toFixed(0) < timeloop && f == fff + 1) {
+       // 444444444444
+        //  if ((start * 3 / 4).toFixed(0) < timeloop && f == fff + 1) {
+     if ( timeloop==9 && b4 == 0) {
+        
             if (play == random) {
 
                 if (random == 1) {
@@ -352,15 +368,20 @@ faketime = time.toFixed(0);
                 else if (random == 3) {
                     ptal.play();
                 }
-
+ b4 = 1;
 
             }
 
-            fff++;
-
+           
+           
 
         }
-
+ if (timeloop == 11) {
+                b1 = 0;
+                b2 = 0;
+                b3 = 0;
+                b4 = 0;
+            }
 
 
     }
